@@ -65,7 +65,7 @@ func local_request_InfoService_Info_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-// RegisterInfoServiceHandlerServer registers the rest handlers for service InfoService to "mux".
+// RegisterInfoServiceHandlerServer registers the http handlers for service InfoService to "mux".
 // UnaryRPC     :call InfoServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
 func RegisterInfoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server InfoServiceServer) error {
@@ -118,13 +118,13 @@ func RegisterInfoServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Se
 	return RegisterInfoServiceHandler(ctx, mux, conn)
 }
 
-// RegisterInfoServiceHandler registers the rest handlers for service InfoService to "mux".
+// RegisterInfoServiceHandler registers the http handlers for service InfoService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
 func RegisterInfoServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
 	return RegisterInfoServiceHandlerClient(ctx, mux, NewInfoServiceClient(conn))
 }
 
-// RegisterInfoServiceHandlerClient registers the rest handlers for service InfoService
+// RegisterInfoServiceHandlerClient registers the http handlers for service InfoService
 // to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "InfoServiceClient".
 // Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "InfoServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in

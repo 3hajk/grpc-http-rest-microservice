@@ -103,8 +103,7 @@
           "title": "API versioning: it is my best practice to specify version explicitly"
         },
         "info": {
-          "$ref": "#/definitions/infoInfo",
-          "title": "ID of created task"
+          "$ref": "#/definitions/infoInfo"
         }
       },
       "title": "Contains data of new info"
