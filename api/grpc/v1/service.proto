@@ -6,14 +6,14 @@ package info;
 
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
-import "protoc-gen-swagger/options/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
-option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "gRPC HTTP Rest Service";
-    version: "0.1";
+    version: "0.0.1";
     contact: {
-      name: "grpc-http-rest-microservice project";
+      name: "gPRC HTTP Rest project";
       url: "https://github.com/3hajk/grpc-http-rest-microservice";
       email: "al.miroshnychenko@gmail.com";
     };
@@ -45,33 +45,29 @@ service InfoService {
   }
 }
 
-// Task we have to do
 message Info {
-  // Unique integer identifier of the todo task
-  int64 id = 1;
+  // Generated UUID
+  string uuid = 1;
 
-  // Title of the task
-  string title = 2;
+  // Actual hash string
+  string hash = 2;
 
-  // Detail description of the todo task
-  string description = 3;
-
-  // Date and time to remind the todo task
-  google.protobuf.Timestamp reminder = 4;
+  // Date and time of generation
+  google.protobuf.Timestamp generationTime = 4;
 }
 
 // Request data to new info
 message InfoRequest{
-  // API versioning: it is my best practice to specify version explicitly
+  // API versioning
   string api = 1;
 }
 
 // Contains data of new info
 message InfoResponse{
-  // API versioning: it is my best practice to specify version explicitly
+  // API versioning
   string api = 1;
 
-  //
+  // Response data
   Info info = 2;
 }
 

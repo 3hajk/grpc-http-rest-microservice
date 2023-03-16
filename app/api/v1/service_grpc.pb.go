@@ -44,22 +44,20 @@ func (c *infoServiceClient) Info(ctx context.Context, in *InfoRequest, opts ...g
 }
 
 // InfoServiceServer is the server API for InfoService service.
-// All implementations must embed UnimplementedInfoServiceServer
+// All implementations should embed UnimplementedInfoServiceServer
 // for forward compatibility
 type InfoServiceServer interface {
 	// New info request
 	Info(context.Context, *InfoRequest) (*InfoResponse, error)
-	mustEmbedUnimplementedInfoServiceServer()
 }
 
-// UnimplementedInfoServiceServer must be embedded to have forward compatible implementations.
+// UnimplementedInfoServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedInfoServiceServer struct {
 }
 
 func (UnimplementedInfoServiceServer) Info(context.Context, *InfoRequest) (*InfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Info not implemented")
 }
-func (UnimplementedInfoServiceServer) mustEmbedUnimplementedInfoServiceServer() {}
 
 // UnsafeInfoServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to InfoServiceServer will

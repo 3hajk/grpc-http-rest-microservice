@@ -7,25 +7,25 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"time"
 )
 
 var (
-	address = flag.String("server", "rest://localhost:8080", "HTTP gateway url, e.g. rest://localhost:8080")
+	address = flag.String("server", "http://localhost:8080", "HTTP gateway url, e.g. http://localhost:8080")
 )
 
 func main() {
 	// get configuration
 	flag.Parse()
 
-	t := time.Now().In(time.UTC)
-	pfx := t.Format(time.RFC3339Nano)
+	//t := time.Now().In(time.UTC)
+	//pfx := t.Format(time.RFC3339Nano)
 
 	var body string
 
+	log.Println(*address)
+
 	// Call Create
-	resp, err := http.Post(*address+"/v1/info", "application/json",
-		strings.NewReader(fmt.Sprintf(`{"api":"v1"}`, pfx, pfx, pfx)))
+	resp, err := http.Post(*address+"/v1/info", "application/json", strings.NewReader(`{"api":"v1"}`))
 	if err != nil {
 		log.Fatalf("failed to call Create method: %v", err)
 	}
@@ -36,5 +36,5 @@ func main() {
 	} else {
 		body = string(bodyBytes)
 	}
-	log.Printf("Create response: Code=%d, Body=%s\n\n", resp.StatusCode, body)
+	log.Printf("Info response: Code=%d, Body=%s\n", resp.StatusCode, body)
 }

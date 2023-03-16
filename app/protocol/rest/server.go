@@ -45,7 +45,9 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	}()
 
 	log.Printf("starting HTTP/REST gateway...\n")
-	return srv.ListenAndServe()
+	// Start HTTP server (and proxy calls to gRPC server endpoint)
+	return http.ListenAndServe(":8080", mux)
+	//return srv.ListenAndServe()
 
 	return nil
 }

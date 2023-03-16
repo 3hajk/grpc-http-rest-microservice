@@ -16,7 +16,7 @@ const (
 )
 
 var (
-	address = flag.String("server", "", "gRPC server in format host:port")
+	address = flag.String("server", ":9090", "gRPC server in format host:port")
 )
 
 func main() {

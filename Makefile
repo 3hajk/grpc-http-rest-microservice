@@ -29,9 +29,9 @@ lint: check-lint dep
 	golangci-lint run --timeout=5m -c .golangci.yml
 
 build:
-	@go build ${LDFLAGS} -o service ./cmd/service
-	@build ${LDFLAGS} -o grpc-client ./cmd/ client-grpc
-	@build ${LDFLAGS} -o http-client ./cmd/client-http
+	@go build ${LDFLAGS} -o bin/service ./cmd/service
+	@go build ${LDFLAGS} -o bin/grpc-client ./cmd/client-grpc
+	@go build ${LDFLAGS} -o bin/http-client ./cmd/client-http
 
 dep:
 	@go mod tidy -compat=1.17
@@ -47,5 +47,6 @@ check-lint:
 	@which golangci-lint || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
 
 proto:
-	@protoc --proto_path=api/grpc/v1 --proto_path=third_party  --go_out=. --go-grpc_out=. --grpc-gateway_out=. service.proto
-	@protoc --proto_path=api/grpc/v1 --proto_path=third_party --swagger_out=logtostderr=true:api/swagger/v1 service.proto
+	@protoc -I . --proto_path=api/grpc/v1 --proto_path=third_party  --go_out . --go-grpc_out . --go-grpc_opt require_unimplemented_servers=false service.proto
+	@protoc -I . --proto_path=api/grpc/v1 --proto_path=third_party --grpc-gateway_out . --grpc-gateway_opt logtostderr=true service.proto
+	@protoc -I . --proto_path=api/grpc/v1 --proto_path=third_party --swagger_out api/swagger/v1 --swagger_opt logtostderr=true service.proto
