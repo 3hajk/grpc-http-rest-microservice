@@ -3,9 +3,11 @@ package v1
 import (
 	"context"
 	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"log"
 	"time"
 )
 
@@ -66,5 +68,5 @@ func (i *infoServiceServer) Info(ctx context.Context, req *v1.InfoRequest) (*v1.
 }
 
 func (i *infoServiceServer) mustEmbedUnimplementedInfoServiceServer() {
-	panic("implement me")
+	log.Println("mustEmbedUnimplementedInfoServiceServer")
 }
