@@ -29,10 +29,12 @@ lint: check-lint dep
 	golangci-lint run --timeout=5m -c .golangci.yml
 
 build:
-	@go build ${LDFLAGS} -o service ./cmd/serivce
+	@go build ${LDFLAGS} -o service ./cmd/service
+	@build ${LDFLAGS} -o grpc-client ./cmd/ client-grpc
+	@build ${LDFLAGS} -o http-client ./cmd/client-http
 
 dep:
-	@go mod tidy
+	@go mod tidy -compat=1.17
 	@go mod download
 
 test:

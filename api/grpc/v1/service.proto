@@ -13,8 +13,8 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     title: "gRPC HTTP Rest Service";
     version: "0.1";
     contact: {
-      name: "grpc-http-rest-microservice project";
-      url: "https://github.com/3hajk/grpc-http-rest-microservice";
+      name: "grpc-rest-rest-microservice project";
+      url: "https://github.com/3hajk/grpc-rest-rest-microservice";
       email: "al.miroshnychenko@gmail.com";
     };
   };

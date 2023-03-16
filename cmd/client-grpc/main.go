@@ -1,12 +1,13 @@
-package client_grpc
+package main
 
 import (
 	"context"
 	"flag"
 	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
-	"google.golang.org/grpc"
 	"log"
 	"time"
+
+	"google.golang.org/grpc"
 )
 
 const (
@@ -34,18 +35,9 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	//t := time.Now().In(time.UTC)
-	//reminder, _ := ptypes.TimestampProto(t)
-	//pfx := t.Format(time.RFC3339Nano)
-
 	// Call Info
 	req := v1.InfoRequest{
 		Api: apiVersion,
-		//: &v1.ToDo{
-		//	Title:       "title (" + pfx + ")",
-		//	Description: "description (" + pfx + ")",
-		//	Reminder:    reminder,
-		//},
 	}
 	res, err := c.Info(ctx, &req)
 	if err != nil {
