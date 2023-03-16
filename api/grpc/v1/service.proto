@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option go_package  = "app/api/v1";
+
+package info;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "gRPC HTTP Rest Service";
+    version: "0.1";
+    contact: {
+      name: "grpc-http-rest-microservice project";
+      url: "https://github.com/3hajk/grpc-http-rest-microservice";
+      email: "al.miroshnychenko@gmail.com";
+    };
+  };
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+  responses: {
+    key: "404";
+    value: {
+      description: "Returned when the resource does not exist.";
+      schema: {
+        json_schema: {
+          type: STRING;
+        }
+      }
+    }
+  }
+};
+
+// Service to manage list of tasks
+service InfoService {
+  // New info request
+  rpc Info(InfoRequest) returns (InfoResponse){
+    option (google.api.http) = {
+      post: "/v1/info"
+      body: "*"
+    };
+  }
+}
+
+// Task we have to do
+message Info {
+  // Unique integer identifier of the todo task
+  int64 id = 1;
+
+  // Title of the task
+  string title = 2;
+
+  // Detail description of the todo task
+  string description = 3;
+
+  // Date and time to remind the todo task
+  google.protobuf.Timestamp reminder = 4;
+}
+
+// Request data to new info
+message InfoRequest{
+  // API versioning: it is my best practice to specify version explicitly
+  string api = 1;
+}
+
+// Contains data of new info
+message InfoResponse{
+  // API versioning: it is my best practice to specify version explicitly
+  string api = 1;
+
+  //
+  Info info = 2;
+}
+
+
