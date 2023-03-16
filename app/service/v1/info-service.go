@@ -5,12 +5,11 @@ import (
 	"sync"
 	"time"
 
+	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-
-	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 )
 
 const (
@@ -26,6 +25,7 @@ type infoServiceServer struct {
 }
 
 // NewInfoServiceServer creates Info service
+//nolint:ireturn
 func NewInfoServiceServer() v1.InfoServiceServer {
 	server := &infoServiceServer{}
 
@@ -49,7 +49,6 @@ func (i *infoServiceServer) generateUUID() {
 	i.mux.Lock()
 	defer i.mux.Unlock()
 	if time.Since(i.GenerationTime) > 5*time.Minute {
-
 		i.UUID = uuid.New()
 		i.GenerationTime = time.Now()
 	}

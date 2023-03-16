@@ -21,40 +21,40 @@ const (
 func Read() (Config, error) {
 	var cfg Config
 	err := read(&cfg)
+
 	return cfg, err
 }
 
 func read(config interface{}, opts ...viper.DecoderConfigOption) error {
-	v := viper.New()
+	reader := viper.New()
 	// replace default viper delimiter for env vars
 	// does not affect .env files, for them default delimiter is expected
-	v.SetEnvKeyReplacer(strings.NewReplacer(viperDefaultDelimiter, "_"))
+	reader.SetEnvKeyReplacer(strings.NewReplacer(viperDefaultDelimiter, "_"))
 
 	if _, err := os.Stat(defaultEnvFileName); !os.IsNotExist(err) {
-		var (
-			// Loads env vars from file and sets them using syscall.Setenv
-			err = godotenv.Load(defaultEnvFileName)
-		)
-		if err != nil {
-			return err
+		// Loads env vars from file and sets them using syscall.Setenv
+		errLoad := godotenv.Load(defaultEnvFileName)
+
+		if errLoad != nil {
+			return errors.Wrap(errLoad, "read config")
 		}
 	}
 
-	v.AutomaticEnv()
-	v.SetTypeByDefaultValue(true)
-	err := setDefaults("", v, reflect.StructField{}, reflect.ValueOf(config).Elem())
+	reader.AutomaticEnv()
+	reader.SetTypeByDefaultValue(true)
+	err := setDefaults("", reader, reflect.StructField{}, reflect.ValueOf(config).Elem())
 	if err != nil {
 		return errors.WithMessage(err, "failed to apply defaults")
 	}
-	err = v.Unmarshal(config, opts...)
+	err = reader.Unmarshal(config, opts...)
 	if err != nil {
 		return errors.WithMessage(err, "failed to parse configuration")
 	}
+
 	return nil
 }
 
 // setDefaults sets default values for struct fields based using value from default tag
-// nolint:gocyclo
 func setDefaults(parentName string, vip *viper.Viper, t reflect.StructField, v reflect.Value) error {
 	if v.Kind() == reflect.Struct {
 		value, ok := t.Tag.Lookup(mapStructureTagName)
@@ -69,6 +69,7 @@ func setDefaults(parentName string, vip *viper.Viper, t reflect.StructField, v r
 				return err
 			}
 		}
+
 		return nil
 	}
 	value, _ := t.Tag.Lookup(defaultTagName)
@@ -80,5 +81,6 @@ func setDefaults(parentName string, vip *viper.Viper, t reflect.StructField, v r
 		}
 		vip.SetDefault(strings.ToUpper(fieldName), value)
 	}
+
 	return nil
 }

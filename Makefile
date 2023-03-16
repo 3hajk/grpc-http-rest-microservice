@@ -44,7 +44,7 @@ coverage:
 	@go test -timeout 30s ./... -covermode=atomic
 
 check-lint:
-	@which golangci-lint || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
+	@which golangci-lint || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.51.2
 
 proto:
 	@protoc -I . --proto_path=api/grpc/v1 --proto_path=third_party  --go_out . --go-grpc_out . --go-grpc_opt require_unimplemented_servers=false service.proto

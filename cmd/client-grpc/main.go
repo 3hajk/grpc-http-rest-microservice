@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 	"log"
 	"time"
 
+	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 	"google.golang.org/grpc"
 )
 
@@ -15,9 +15,7 @@ const (
 	apiVersion = "v1"
 )
 
-var (
-	address = flag.String("server", ":9090", "gRPC server in format host:port")
-)
+var address = flag.String("server", ":9090", "gRPC server in format host:port")
 
 func main() {
 	// get configuration

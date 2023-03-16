@@ -3,12 +3,13 @@ package app
 import (
 	"context"
 	"fmt"
+	"log"
+
 	"github.com/3hajk/grpc-http-rest-microservice/app/protocol/grpc"
 	"github.com/3hajk/grpc-http-rest-microservice/app/protocol/rest"
 	"github.com/3hajk/grpc-http-rest-microservice/app/service/v1"
 	"github.com/3hajk/grpc-http-rest-microservice/cfg"
 	"github.com/pkg/errors"
-	"log"
 )
 
 var (
@@ -23,7 +24,6 @@ func GetAppTitle() string {
 
 // RunServer runs gRPC server and HTTP gateway
 func RunServer() error {
-
 	conf, err := cfg.Read()
 	if err != nil {
 		return errors.Wrap(err, "read config")

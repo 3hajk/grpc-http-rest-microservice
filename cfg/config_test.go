@@ -1,9 +1,10 @@
 package cfg
 
 import (
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Defaults(t *testing.T) {
@@ -20,7 +21,7 @@ func Test_ManualSetup(t *testing.T) {
 	restoreEnv(t, "GRPC_PORT")
 
 	value := "5090"
-	_ = os.Setenv("GRPC_PORT", value)
+	t.Setenv("GRPC_PORT", value)
 
 	cfg, err := Read()
 	assert.NoError(t, err)
@@ -31,7 +32,7 @@ func TestLoader_Defaults(t *testing.T) {
 	restoreEnv(t, "GRPC_PORT")
 
 	value := "9091"
-	_ = os.Setenv("GRPC_PORT", value)
+	t.Setenv("GRPC_PORT", value)
 
 	var cfg Config
 	err := read(&cfg)
@@ -39,6 +40,7 @@ func TestLoader_Defaults(t *testing.T) {
 	assert.Equal(t, value, cfg.GRPCService.Port)
 }
 
+//nolint:thelper
 func restoreEnv(t *testing.T, key string) {
 	revertValue := os.Getenv(key)
 	t.Cleanup(func() {

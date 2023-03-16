@@ -2,16 +2,15 @@ package v1
 
 import (
 	"context"
-	v1 "github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 	"testing"
+
+	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 )
 
 func Test_toDoServiceServer_Create(t *testing.T) {
 	ctx := context.Background()
 
 	s := NewInfoServiceServer()
-	//tm := time.Now().In(time.UTC)
-	//reminder, _ := ptypes.TimestampProto(tm)
 
 	type args struct {
 		ctx context.Context

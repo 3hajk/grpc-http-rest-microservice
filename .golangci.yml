@@ -43,6 +43,22 @@ linters:
     - lll
     - staticcheck
     - godot
+    - paralleltest
+    - exhaustivestruct
+    - wrapcheck
+    - nlreturn
+    - exhaustruct
+    - scopelint
+    - varnamelen
+    - deadcode
+    - ifshort
+    - varcheck
+    - interfacer
+    - nosnakecase
+    - structcheck
+    - deadcode
+    - golint
+    - nolintlint
 
 run:
   skip-dirs:

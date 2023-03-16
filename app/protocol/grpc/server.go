@@ -21,9 +21,6 @@ func RunServer(ctx context.Context, v1API v1.InfoServiceServer, port string) err
 	// gRPC server statup options
 	opts := []grpc.ServerOption{}
 
-	// add middleware
-	//opts = middleware.AddLogging(logger.Log, opts)
-
 	// register service
 	server := grpc.NewServer(opts...)
 	v1.RegisterInfoServiceServer(server, v1API)
@@ -44,5 +41,6 @@ func RunServer(ctx context.Context, v1API v1.InfoServiceServer, port string) err
 
 	// start gRPC server
 	log.Println("starting gRPC server...")
+
 	return server.Serve(listen)
 }
