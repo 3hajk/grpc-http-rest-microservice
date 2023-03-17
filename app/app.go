@@ -20,7 +20,7 @@ var (
 )
 
 func GetAppTitle() string {
-	return fmt.Sprintf("Matcher service (%s) Version: %s, Build Time: %s", Branch, Version, Build)
+	return fmt.Sprintf("Info service (%s) Version: %s, Build Time: %s", Branch, Version, Build)
 }
 
 // RunServer runs gRPC server and HTTP gateway
@@ -29,8 +29,7 @@ func RunServer() error {
 	if err != nil {
 		return errors.Wrap(err, "read config")
 	}
-
-	log.Printf("%+v", conf)
+	log.Printf("%s starting...", GetAppTitle())
 
 	ctx := context.Background()
 

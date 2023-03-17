@@ -9,7 +9,7 @@ import (
 	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 )
 
-func Test_toDoServiceServer_Create(t *testing.T) {
+func Test_InfoServiceServer_Info(t *testing.T) {
 	ctx := context.Background()
 
 	info := store.NewInfo(ctx, 5*time.Minute)
