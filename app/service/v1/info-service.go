@@ -2,12 +2,10 @@ package v1
 
 import (
 	"context"
-	"sync"
-	"time"
 
 	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
+	"github.com/3hajk/grpc-http-rest-microservice/app/store"
 	"github.com/golang/protobuf/ptypes"
-	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -19,19 +17,15 @@ const (
 
 // infoServiceServer is implementation of v1.InfoServiceServer proto interface
 type infoServiceServer struct {
-	UUID           uuid.UUID
-	GenerationTime time.Time
-	mux            sync.RWMutex
+	info *store.Info
 }
 
 // NewInfoServiceServer creates Info service
 //nolint:ireturn
-func NewInfoServiceServer() v1.InfoServiceServer {
-	server := &infoServiceServer{}
-
-	server.generateUUID()
-
-	return server
+func NewInfoServiceServer(storeInfo *store.Info) v1.InfoServiceServer {
+	return &infoServiceServer{
+		info: storeInfo,
+	}
 }
 
 func (i *infoServiceServer) checkAPI(api string) error {
@@ -45,31 +39,23 @@ func (i *infoServiceServer) checkAPI(api string) error {
 	return nil
 }
 
-func (i *infoServiceServer) generateUUID() {
-	i.mux.Lock()
-	defer i.mux.Unlock()
-	if time.Since(i.GenerationTime) > 5*time.Minute {
-		i.UUID = uuid.New()
-		i.GenerationTime = time.Now()
-	}
-}
-
 func (i *infoServiceServer) Info(ctx context.Context, req *v1.InfoRequest) (*v1.InfoResponse, error) {
 	// check if the API version requested by client is supported by server
 	if err := i.checkAPI(req.Api); err != nil {
 		return nil, err
 	}
-	i.mux.RLock()
-	t, err := ptypes.TimestampProto(i.GenerationTime)
-	i.mux.RUnlock()
+
+	UUID, hash, generationTime := i.info.GetInfo()
+
+	t, err := ptypes.TimestampProto(generationTime)
 	if err != nil {
 		return nil, err
 	}
 	return &v1.InfoResponse{
 		Api: apiVersion,
 		Info: &v1.Info{
-			Uuid:           i.UUID.String(),
-			Hash:           "test",
+			Uuid:           UUID,
+			Hash:           hash,
 			GenerationTime: t,
 		},
 	}, nil

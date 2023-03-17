@@ -1,9 +1,12 @@
 package cfg
 
+import "time"
+
 type Config struct {
-	GRPCService GRPC   `mapstructure:"GRPC"`
-	HTTPService HTTP   `mapstructure:"HTTP"`
-	Logger      Logger `mapstructure:"LOGGER"`
+	GRPCService GRPC `mapstructure:"GRPC"`
+	HTTPService HTTP `mapstructure:"HTTP"`
+
+	Regenerate time.Duration `mapstructure:"REGENERATE"      default:"5m"`
 }
 
 type GRPC struct {
@@ -16,12 +19,4 @@ type HTTP struct {
 	// HTTP/REST gateway start parameters section
 	// HTTPPort is TCP port to listen by HTTP/REST gateway
 	Port string `mapstructure:"PORT"                 default:"8080"`
-}
-
-type Logger struct {
-	// Log parameters section
-	// LogLevel is global log level: Debug(-1), Info(0), Warn(1), Error(2), DPanic(3), Panic(4), Fatal(5)
-	LogLevel int `mapstructure:"LEVEL"                 default:"-1"`
-	// LogTimeFormat is print time format for logger e.g. 2006-01-02T15:04:05Z07:00
-	LogTimeFormat string `mapstructure:"TIME_FORMAT"`
 }

@@ -11,6 +11,7 @@ import (
 
 var address = flag.String("server", "http://localhost:8080", "HTTP gateway url, e.g. http://localhost:8080")
 
+//nolint:noctx
 func main() {
 	// get configuration
 	flag.Parse()

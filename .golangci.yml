@@ -59,6 +59,10 @@ linters:
     - deadcode
     - golint
     - nolintlint
+    - gci
+    - gofumpt
+    - containedctx
+    - gofmt
 
 run:
   skip-dirs:

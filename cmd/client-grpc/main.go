@@ -17,6 +17,7 @@ const (
 
 var address = flag.String("server", ":9090", "gRPC server in format host:port")
 
+// nolint:gocritic
 func main() {
 	// get configuration
 	flag.Parse()

@@ -2,7 +2,9 @@ package v1
 
 import (
 	"context"
+	"github.com/3hajk/grpc-http-rest-microservice/app/store"
 	"testing"
+	"time"
 
 	"github.com/3hajk/grpc-http-rest-microservice/app/api/v1"
 )
@@ -10,9 +12,11 @@ import (
 func Test_toDoServiceServer_Create(t *testing.T) {
 	ctx := context.Background()
 
-	s := NewInfoServiceServer()
+	info := store.NewInfo(ctx, 5*time.Minute)
+	s := NewInfoServiceServer(info)
 
 	type args struct {
+		//nolin:containedctx
 		ctx context.Context
 		req *v1.InfoRequest
 	}

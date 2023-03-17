@@ -8,6 +8,7 @@ import (
 	"github.com/3hajk/grpc-http-rest-microservice/app/protocol/grpc"
 	"github.com/3hajk/grpc-http-rest-microservice/app/protocol/rest"
 	"github.com/3hajk/grpc-http-rest-microservice/app/service/v1"
+	"github.com/3hajk/grpc-http-rest-microservice/app/store"
 	"github.com/3hajk/grpc-http-rest-microservice/cfg"
 	"github.com/pkg/errors"
 )
@@ -33,7 +34,9 @@ func RunServer() error {
 
 	ctx := context.Background()
 
-	v1API := v1.NewInfoServiceServer()
+	info := store.NewInfo(ctx, conf.Regenerate)
+
+	v1API := v1.NewInfoServiceServer(info)
 
 	go func() {
 		err = rest.RunServer(ctx, conf.GRPCService.Port, conf.HTTPService.Port)
