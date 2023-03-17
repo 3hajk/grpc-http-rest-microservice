@@ -73,9 +73,9 @@ build-service-no-cache:
     --build-arg NAME="${NAME}" \
     --build-arg VENDOR="${VENDOR}" .
 
-up:
-	@docker-compose up -d
+dc-up:
+	@docker-compose -f infrastructure/docker-compose.yml up -d
 
-down:
-	@docker-compose down
+dc-down:
+	@docker-compose -f infrastructure/docker-compose.yml down
 

@@ -8,3 +8,9 @@ Env configuration
 | GRPC_PORT                                     | yes      | 9090                    | gRPC server port                   |
 | HTTP_PORT                                     | yes      | 8080                    | HTTP server Port                   |
 | REGENERATE                                    | yes      | 5 min                   | Time regenerate UUID               |
+
+
+Build
+--
+Build service by Makefile
+> make

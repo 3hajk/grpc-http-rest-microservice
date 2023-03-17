@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: info-service
+  namespace: test
+  labels:
+    app: info-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: info-service
+  template:
+    metadata:
+      labels:
+        app: info-service
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: info-service
+          image: grpc-http-rest-project/info-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: GRPC_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: info-service
+                  key: GRPC_PORT
+            - name: HTTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: info-service
+                  key: HTTP_PORT
